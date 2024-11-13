@@ -1,0 +1,18 @@
+# Usando imagem base recomendada para Node.js
+FROM node:14
+
+# Definindo diretório de trabalho
+WORKDIR /app
+
+# Limpando o cache do npm e instalando dependências
+COPY package*.json ./
+RUN npm cache clean --force && npm install
+
+# Copiando o código do backend para o contêiner
+COPY . .
+
+# Expondo a porta 5000
+EXPOSE 5000
+
+# Comando para iniciar o servidor
+CMD ["node", "server.js"]

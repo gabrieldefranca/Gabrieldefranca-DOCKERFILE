@@ -1,0 +1,21 @@
+# Usando a imagem base recomendada para Node.js com React
+FROM node:14-alpine
+
+# Definindo diretório de trabalho
+WORKDIR /app
+
+# Limpando o cache do npm e instalando dependências
+COPY package*.json ./
+RUN npm cache clean --force && npm install
+
+# Copiando o código para o contêiner
+COPY . .
+
+# Compilando a aplicação
+RUN npm run build
+
+# Expondo a porta 3000
+EXPOSE 3000
+
+# Comando para iniciar o servidor
+CMD ["npm", "start"]

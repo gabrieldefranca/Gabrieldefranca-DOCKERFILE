@@ -1,0 +1,10 @@
+# Usando imagem base recomendada para o PostgreSQL
+FROM postgres:13
+
+# Variáveis de ambiente para configurar o banco
+ENV POSTGRES_USER=myuser
+ENV POSTGRES_PASSWORD=mypassword
+ENV POSTGRES_DB=mydatabase
+
+# Expondo a porta padrão do PostgreSQL
+EXPOSE 5432

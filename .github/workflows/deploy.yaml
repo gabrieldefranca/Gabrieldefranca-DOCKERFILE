@@ -1,0 +1,39 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push frontend image
+        run: |
+          docker build -t my-dockerhub-username/my-frontend ./frontend
+          docker push my-dockerhub-username/my-frontend
+
+      - name: Build and push backend image
+        run: |
+          docker build -t my-dockerhub-username/my-backend ./backend
+          docker push my-dockerhub-username/my-backend
+
+      - name: Build and push database image
+        run: |
+          docker build -t my-dockerhub-username/my-database ./database
+          docker push my-dockerhub-username/my-database
+
+      - name: Simulate deployment to production
+        run: echo "Simulating deployment to production environment..."

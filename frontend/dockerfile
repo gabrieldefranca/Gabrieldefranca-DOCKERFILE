@@ -1,0 +1,21 @@
+# Usando a imagem base recomendada para aplicações Node.js com React
+FROM node:14-alpine
+
+# Definindo diretório de trabalho
+WORKDIR /app
+
+# Copiando o package.json e package-lock.json e instalando dependências
+COPY package*.json ./
+RUN npm install
+
+# Copiando todo o código-fonte do frontend para o contêiner
+COPY . .
+
+# Compilando a aplicação para produção
+RUN npm run build
+
+# Expondo a porta que o frontend utilizará
+EXPOSE 3000
+
+# Comando para iniciar a aplicação
+CMD ["npm", "start"]
